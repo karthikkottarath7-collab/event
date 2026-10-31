@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventSphere - Campus Login</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+
+            /* Campus image + transparent blue-green overlay */
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 76, 129, 0.72),
+                    rgba(32, 178, 170, 0.62)
+                ),
+                url("https://i.pinimg.com/736x/d9/64/f4/d964f4862e677d890619379a81335430.jpg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 35px;
+            width: 350px;
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 30px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(90deg, #0878b9, #13a89e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            color: #527477;
+            font-size: 11px;
+            letter-spacing: 1px;
+            margin: 8px 0 25px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #cbdfe3;
+            border-radius: 8px;
+            font-family: inherit;
+            background: white;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: #13a89e;
+            box-shadow: 0 0 5px rgba(19, 168, 158, 0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #0878b9, #13a89e);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(8, 120, 185, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>✦ EventSphere</h2>
+
+        <div class="tagline">
+            CONNECT • CELEBRATE • CREATE MEMORIES
+        </div>
+
+        <form>
+            <input type="email"
+                   placeholder="Email Address"
+                   aria-label="Email Address"
+                   required>
+
+            <input type="password"
+                   placeholder="Password"
+                   aria-label="Password"
+                   required>
+
+
+            <button type="submit">Login →</button>
+            Already have an account?
+            <a href="/register">register</a>
+        </form>
+    </div>
+    <script>
+document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const role = document.querySelector("select").value;
+
+    if (role === "student") {
+        window.location.href = "/home";
+    }
+    else if (role === "organiser") {
+        window.location.href = "/organiser";
+    }
+    else if (role === "admin") {
+        window.location.href = "/admin";
+    }
+    else {
+        alert("Please select a role.");
+    }
+});
+</script>
+</body>
+</html>
+

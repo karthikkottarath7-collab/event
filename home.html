@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f1f7fb;color:#163653}
+header{background:linear-gradient(90deg,#06456b,#087e83);color:white;padding:20px 30px;display:flex;justify-content:space-between;align-items:center}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+aside{width:220px;background:#073b5b;color:white;padding:25px 15px}
+aside h3{margin-bottom:25px}
+aside a{display:block;color:white;text-decoration:none;padding:13px 10px;border-radius:7px;margin:7px 0}
+aside a:hover,aside a.active{background:#078c8b}
+main{flex:1;padding:30px;min-width:0}
+h2{margin-bottom:8px}
+.subtitle{color:#647b91;margin-bottom:25px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:15px;margin-bottom:30px}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 3px 12px #dce8f0;margin-bottom:15px}
+.stat{font-size:28px;font-weight:bold;color:#078c83;margin-top:12px}
+.events{display:grid;grid-template-columns:repeat(3,minmax(180px,1fr));gap:15px}
+.event h3{margin:12px 0}
+.event p{color:#647b91;font-size:14px;line-height:1.8}
+.tag{display:inline-block;background:#d8f7ef;color:#087d70;padding:5px 9px;border-radius:15px;font-size:12px;margin:12px 0}
+button{background:#078f81;color:white;border:0;padding:11px 14px;border-radius:6px;cursor:pointer;width:100%;margin-top:12px}
+button:hover{background:#056b66}
+.notice{border-left:4px solid #079b89}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.events{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.layout{display:block}aside{width:100%}aside a{display:inline-block}.events{grid-template-columns:1fr}main{padding:18px}}
+</style>
+</head>
+<body>
+<header>
+<h2>🎓 Campus Event Management</h2>
+<span>🔔 &nbsp; Student Portal</span>
+</header>
+<div class="layout">
+<aside>
+<h3>Student Menu</h3>
+<a class="active" href="#dashboard">🏠 Dashboard</a>
+<a href="#events">📅 Browse Events</a>
+<a href="#registrations">✅ My Registrations</a>
+<a href="#announcements">📢 Announcements</a>
+<a href="#profile">👤 My Profile</a>
+<a href="/">↪ Logout</a>
+
+</aside>
+<main id="dashboard">
+<h2>Welcome Back, Student! 👋</h2>
+<p class="subtitle">Discover events, meet people and make your campus life memorable.</p>
+<div class="stats">
+<div class="card">Upcoming Events<div class="stat">12</div></div>
+<div class="card">My Registrations<div class="stat">3</div></div>
+<div class="card">Completed Events<div class="stat">5</div></div>
+<div class="card">Announcements<div class="stat">2</div></div>
+</div>
+
+<h2 id="events">Upcoming Events</h2>
+<p class="subtitle">Explore events happening on your campus.</p>
+<div class="events">
+<div class="card event">
+<h3>💻 Tech Talk</h3>
+<p>Date: 28 October 2026</p>
+<p>Venue: College Auditorium</p>
+<p>Explore new technologies and AI.</p>
+<span class="tag">Technical</span>
+<button onclick="registerEvent('Tech Talk')">Register Now</button>
+</div>
+<div class="card event">
+<h3>🎵 Music Festival</h3>
+<p>Date: 2 November 2026</p>
+<p>Venue: College Ground</p>
+<p>Enjoy music and student performances.</p>
+<span class="tag">Cultural</span>
+<button onclick="registerEvent('Music Festival')">Register Now</button>
+</div>
+<div class="card event">
+<h3>⚽ Football Match</h3>
+<p>Date: 10 November 2026</p>
+<p>Venue: Sports Ground</p>
+<p>Support your college team.</p>
+<span class="tag">Sports</span>
+<button onclick="registerEvent('Football Match')">Register Now</button>
+</div>
+</div>
+
+<div class="card" id="registrations">
+<h2>My Registrations</h2>
+<ul id="registrationList"><li>No registrations yet.</li></ul>
+</div>
+<div class="card notice" id="announcements">
+<h2>Announcements</h2>
+<p>📢 Stay tuned for upcoming college events and registration deadlines.</p>
+</div>
+<div class="card" id="profile">
+<h2>My Profile</h2>
+<p>Name: Student</p>
+<p>Role: Student</p>
+<p>Update your account details through your profile settings.</p>
+</div>
+</main>
+</div>
+<script>
+const registrations = [];
+function registerEvent(name){
+  if(registrations.includes(name)){
+    alert("You have already registered for this event.");
+    return;
+  }
+  registrations.push(name);
+  const list=document.getElementById("registrationList");
+  list.innerHTML="";
+  registrations.forEach(event=>{
+    const item=document.createElement("li");
+    item.textContent=event;
+    list.appendChild(item);
+  });
+  alert("Registration added for "+name+"!");
+}
+</script>
+</body>
+</html>

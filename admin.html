@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrator Dashboard</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f1f7fb;color:#163653}
+header{background:linear-gradient(90deg,#06456b,#087e83);color:white;padding:20px 30px}
+.layout{display:flex;min-height:calc(100vh - 65px)}
+aside{width:220px;background:#073b5b;color:white;padding:25px 15px}
+aside h3{margin-bottom:25px}
+aside a{display:block;padding:13px 10px;color:white;text-decoration:none;border-radius:7px;margin:7px 0}
+aside a:hover,aside a.active{background:#078c8b}
+main{padding:30px;flex:1;min-width:0}
+.subtitle{color:#647b91;margin:10px 0 25px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:15px;margin-bottom:25px}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 3px 12px #dce8f0;margin-bottom:20px}
+.number{font-size:28px;color:#078c83;font-weight:bold;margin-top:12px}
+table{width:100%;border-collapse:collapse;min-width:570px}
+th,td{text-align:left;padding:13px;border-bottom:1px solid #e3edf3}
+th{background:#eaf5f8}
+.table-wrap{overflow-x:auto}
+button{border:0;padding:9px 12px;color:white;border-radius:5px;cursor:pointer;margin:3px}
+.approve{background:#07966e}.reject{background:#e44f5b}
+input,textarea,select{width:100%;padding:11px;border:1px solid #cbdce5;border-radius:6px;margin:8px 0 15px}
+.primary{background:#078c83;color:white;border:0;padding:12px;border-radius:6px;cursor:pointer}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.layout{display:block}aside{width:100%}aside a{display:inline-block}main{padding:18px}}
+</style>
+</head>
+<body>
+<header><h2>🛡 Campus Event Management — Administrator</h2></header>
+<div class="layout">
+<aside>
+<h3>Admin Menu</h3>
+<a class="active" href="#dashboard">🏠 Dashboard</a>
+<a href="#users">👥 Manage Users</a>
+<a href="#requests">📋 Event Requests</a>
+<a href="#allEvents">📅 All Events</a>
+<a href="#registrations">✅ Registrations</a>
+<a href="#announcements">📢 Announcements</a>
+<a href="#reports">📊 Reports</a>
+<a href="/">↪ Logout</a>
+</aside>
+<main id="dashboard">
+<h2>Administrator Dashboard</h2>
+<p class="subtitle">Manage users, review events and monitor campus activities.</p>
+<div class="stats">
+<div class="card">Total Students<div class="number">245</div></div>
+<div class="card">Total Organisers<div class="number">18</div></div>
+<div class="card">Total Events<div class="number" id="eventCount">32</div></div>
+<div class="card">Registrations<div class="number">586</div></div>
+</div>
+
+<div class="card" id="requests">
+<h2>Event Requests — Pending Approval</h2><br>
+<div class="table-wrap"><table>
+<thead><tr><th>Event</th><th>Organiser</th><th>Status</th><th>Action</th></tr></thead>
+<tbody id="requestRows">
+<tr><td>Robotics Workshop</td><td>Rahul N.</td><td class="status">Pending</td><td><button class="approve" onclick="review(this,'Approved')">Approve</button><button class="reject" onclick="review(this,'Rejected')">Reject</button></td></tr>
+<tr><td>Cultural Festival</td><td>Sneha P.</td><td class="status">Pending</td><td><button class="approve" onclick="review(this,'Approved')">Approve</button><button class="reject" onclick="review(this,'Rejected')">Reject</button></td></tr>
+<tr><td>Technical Quiz</td><td>Arjun M.</td><td class="status">Pending</td><td><button class="approve" onclick="review(this,'Approved')">Approve</button><button class="reject" onclick="review(this,'Rejected')">Reject</button></td></tr>
+</tbody></table></div>
+</div>
+
+<div class="card" id="users">
+<h2>Manage Users</h2><br>
+<div class="table-wrap"><table>
+<tr><th>Name</th><th>Role</th><th>Account Status</th></tr>
+<tr><td>Ananya S.</td><td>Student</td><td>Active</td></tr>
+<tr><td>Rahul N.</td><td>Event Organiser</td><td>Active</td></tr>
+<tr><td>Meera T.</td><td>Student</td><td>Active</td></tr>
+</table></div>
+</div>
+
+<div class="card" id="allEvents">
+<h2>All Events</h2><br>
+<p>Review submitted events and their approval status in the Event Requests section.</p>
+</div>
+
+<div class="card" id="registrations">
+<h2>Recent Registrations</h2><br>
+<p>Tech Talk — 78 registrations</p><br>
+<p>Music Festival — 56 registrations</p><br>
+<p>Web Development Workshop — 32 registrations</p>
+</div>
+
+<div class="card" id="announcements">
+<h2>Publish Announcement</h2>
+<form onsubmit="publishAnnouncement(event)">
+<label>Announcement Title</label>
+<input id="announcementTitle" required placeholder="Enter title">
+<label>Announcement Message</label>
+<textarea id="announcementMessage" required placeholder="Enter message"></textarea>
+<button class="primary" type="submit">Publish Announcement</button>
+</form>
+<div id="published"></div>
+</div>
+
+<div class="card" id="reports">
+<h2>Reports</h2>
+<p>Total events: <strong id="reportEvents">32</strong></p>
+<p>Total student registrations: <strong>586</strong></p>
+<p>Total organisers: <strong>18</strong></p>
+</div>
+</main>
+</div>
+<script>
+function review(button,status){
+  const row=button.closest("tr");
+  row.querySelector(".status").textContent=status;
+  row.querySelectorAll("button").forEach(b=>b.disabled=true);
+}
+function publishAnnouncement(event){
+  event.preventDefault();
+  const title=document.getElementById("announcementTitle").value;
+  const message=document.getElementById("announcementMessage").value;
+  const box=document.createElement("div");
+  box.className="card";
+  const heading=document.createElement("h3");
+  heading.textContent=title;
+  const paragraph=document.createElement("p");
+  paragraph.textContent=message;
+  box.append(heading,paragraph);
+  document.getElementById("published").prepend(box);
+  event.target.reset();
+}
+</script>
+</body>
+</html>
